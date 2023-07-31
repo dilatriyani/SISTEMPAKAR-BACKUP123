@@ -12,5 +12,5 @@ class HistoryDiagnosa extends Model
     protected $primaryKey = 'id';
     protected $table = "history_diagnosa";
 
-    protected $fillable = ['nama', 'umur', 'penyakit'];
+    protected $fillable = ['nama', 'umur', 'penyakit', 'alamat', 'persentase', 'solusi'];
 }
