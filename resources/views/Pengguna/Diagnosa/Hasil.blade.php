@@ -84,7 +84,7 @@
                                         </div>
                                         <div class="mt-5 ">
                                           <a href="/" class="p-1"><button type="button " class="btn btn-secondary ">Konsultasi Lagi</button></a>
-                                          <a href="{{ url('/Pengguna/Diagnosa/Cetak') }}"><button type="button" class="btn btn-secondary">Cetak</button></a>
+                                          <a><button id="printButton" type="button" class="btn btn-secondary">Cetak</button></a>
                                         </div>
 
                                     </div>
@@ -96,7 +96,13 @@
 
             </div>
 
-            </div>
         </section><!-- End Frequently Asked Questions Section -->
     </body>
+
+    <script>
+        document.getElementById('printButton').addEventListener('click', function() {
+            window.print();
+        });
+    </script>
+
 @endsection

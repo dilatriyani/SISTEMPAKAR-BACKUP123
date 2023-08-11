@@ -46,7 +46,10 @@ class dashboardController extends Controller
         if ($id == null) {
             $id = 1;
         }
-        $gejala = Gejala::query()->findOrFail($id);
+        $gejala = Gejala::query()->find($id);
+        if ($gejala == null) {
+            return redirect('')->with('error', 'Inform admin, data is not updated');
+        }
         return view('Pengguna.Diagnosa.form')->with([
             'gejala' => $gejala,
             'user_name' => last($user_name),
@@ -57,7 +60,12 @@ class dashboardController extends Controller
 
     public function result(Request $request,)
     {
+        $rule_last = Rule::latest()->first();
+        $penyakit_last = data_penyakit::latest()->first();
         $last = Gejala::latest()->first();
+        if ($last == null || $penyakit_last == null || $rule_last == null) {
+            return redirect('')->with('error', 'Inform admin, data is not updated');
+        }
         $penyakit_total = data_penyakit::get()->count();
         $id_gejala = $request->id_gejala;
         $next = $id_gejala + 1;

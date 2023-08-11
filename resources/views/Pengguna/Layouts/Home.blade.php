@@ -2,6 +2,14 @@
 @section('container')
 <section id="hero" class="hero">
     <div class="container position-relative">
+        @if (Session::has('error'))
+        <div class="row">
+            <div class="alert alert-danger alert-danger" role="alert">
+                <strong>Error !</strong> {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        </div>
+        @endif
         <div class="row gy-5" data-aos="fade-in">
             <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
                 <h2>Hello!! Selamat datang di <span>EXSISC</span></h2>
