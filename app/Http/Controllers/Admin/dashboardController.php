@@ -89,15 +89,14 @@ class dashboardController extends Controller
             return redirect('/Pengguna/Diagnosa/' . $next);
         } else {
             $penyakit = Session::get('penyakit');
-            $arrayLength = count($penyakit);
-            if ($arrayLength == 0) {
+            if ($penyakit == null || count($penyakit) == 0) {
                 return redirect('/Pengguna/Diagnosa/1')->with(['message' => 'Pilih setidaknya 1 Gejala!']);
             }
 
             $id_gejala_all = Session::get('IdGejala');
             $id_penyakit_possible = array_unique(Session::get('penyakit'));
             $score_results = [];
-            
+
             // perhitungan score
             foreach ($id_penyakit_possible as $penyakit_id) {
                 $rules_for_penyakit = Rule::where('id_penyakit', $penyakit_id)->get();
@@ -117,7 +116,7 @@ class dashboardController extends Controller
                     $score_results[] = $score;
                 }
             }
-
+            
             Session::put('score', $score_results);
             
             // dd($id_gejala_all,$id_penyakit_possible, Session::get('score'));
