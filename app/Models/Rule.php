@@ -35,4 +35,9 @@ class Rule extends Model
     {
         return $this->hasMany(gejala::class, 'id', 'daftar_gejala');
     }
+
+    public function many_penyakit()
+    {
+        return $this->hasMany(data_penyakit::class);
+    }
 }

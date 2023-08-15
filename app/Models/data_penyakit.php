@@ -12,8 +12,14 @@ class data_penyakit extends Model
     protected $guarded = [' '];
 
     protected $table = "data_penyakits";
+
     public function data_gejala()
     {
         return $this->hasMany(gejala::class);
+    }
+
+    public function rule()
+    {
+        return $this->belongsTo(Rule::class);
     }
 }

@@ -75,12 +75,14 @@ class dashboardController extends Controller
                     Session::push('IdGejala', $gejala->id);
                     foreach($data_penyakit as $penyakit){
                         $rule = Rule::where('id_penyakit', $penyakit->id)->first();
-                        $daftar_gejala = explode(',', $rule->daftar_gejala);
-                        foreach ($daftar_gejala as $gejala) {
+                        if($rule != null){
                             $daftar_gejala = explode(',', $rule->daftar_gejala);
-                            if ($gejala == $id_gejala) {
-                                Session::push('penyakit', $rule->id_penyakit);
-                                break;
+                            foreach ($daftar_gejala as $gejala) {
+                                $daftar_gejala = explode(',', $rule->daftar_gejala);
+                                if ($gejala == $id_gejala) {
+                                    Session::push('penyakit', $rule->id_penyakit);
+                                    break;
+                                }
                             }
                         }
                     }

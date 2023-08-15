@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\data_penyakit;
+use App\Models\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -96,7 +97,7 @@ class data_penyakitController extends Controller
     public function destroy($id)
     {
         $data_penyakit = data_penyakit::findOrFail($id);
-        $data_penyakit->relatedModel()->delete();
+        // $data_penyakit->relatedModel()->delete();
         $data_penyakit->delete();
 
         //redirect to index
