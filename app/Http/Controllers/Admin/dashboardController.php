@@ -61,7 +61,7 @@ class dashboardController extends Controller
     public function result(Request $request)
     {
         $last = Gejala::latest()->first();
-        $penyakit_total = data_penyakit::get()->count();
+        $data_penyakit = data_penyakit::get();
         $id_gejala = $request->id_gejala;
         $next = $id_gejala + 1;
         if ($next <= $last->id) {
@@ -73,8 +73,8 @@ class dashboardController extends Controller
                     # save gejala selected
                     Session::push('gejala', $gejala->nama_gejala);
                     Session::push('IdGejala', $gejala->id);
-                    for ($i = 1; $i <= $penyakit_total; $i++) {
-                        $rule = Rule::query()->findOrFail($i);
+                    foreach($data_penyakit as $penyakit){
+                        $rule = Rule::where('id_penyakit', $penyakit->id)->first();
                         $daftar_gejala = explode(',', $rule->daftar_gejala);
                         foreach ($daftar_gejala as $gejala) {
                             $daftar_gejala = explode(',', $rule->daftar_gejala);
