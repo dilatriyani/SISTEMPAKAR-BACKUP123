@@ -13,7 +13,7 @@ class RuleController extends Controller
 
     public function index()
     {
-       
+
         $data = [
             "rules" => Rule::with(['data_penyakit', 'gejala'])
                         ->orderBy('id', 'asc')
@@ -33,15 +33,16 @@ class RuleController extends Controller
         'daftar_gejala' => 'required|array',
     ]);
 
-    $data_rule = new Rule;
-    $data_rule->id_penyakit = $request->input('id_penyakit');
-    $data_rule->daftar_gejala = implode(',', $request->input('daftar_gejala'));
+    // $data_rule = new Rule;
+    // $data_rule->id_penyakit = $request->input('id_penyakit');
+    // $data_rule->daftar_gejala = implode(',', $request->input('daftar_gejala'));
 
-    // // Mendapatkan objek penyakit berdasarkan kode penyakit yang dipilih
-    // $penyakit = data_penyakit::findOrFail($request->input('kd_penyakit'));
-    // $data_rule->nama_penyakit = $penyakit->nama;
+    Rule::create([
+        'id_penyakit' => $request->input('id_penyakit'),
+        'daftar_gejala' => implode(',', $request->input('daftar_gejala')),
+    ]);
 
-    $data_rule->save();
+    // $data_rule->save();
 
     return redirect()->back()->with('success', 'Data rule berhasil ditambahkan!');
 }

@@ -20,7 +20,7 @@ class Rule extends Model
 
     // ];
 
-    protected $fillable = ['kd_penyakit', 'daftar_gejala'];
+    protected $fillable = ['id_penyakit', 'daftar_gejala'];
     // public function gejala()
     // {
     //     return $this->belongsTo(gejala::class, 'kd_gejala', 'id');
