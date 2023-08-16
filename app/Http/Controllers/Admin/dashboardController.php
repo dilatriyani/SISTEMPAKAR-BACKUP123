@@ -10,10 +10,6 @@ use App\Models\Rule;
 use App\Models\HistoryDiagnosa;
 use App\Models\data_penyakit;
 use Illuminate\Support\Facades\Session;
-// use PDF;
-// use Spatie\Browsershot\Browsershot;
-// use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
-// use Illuminate\Support\Facades\URL;
 
 class dashboardController extends Controller
 {
@@ -101,35 +97,31 @@ class dashboardController extends Controller
 
             // perhitungan score
             foreach ($id_penyakit_possible as $penyakit_id) {
-                $rules_for_penyakit = Rule::where('id_penyakit', $penyakit_id)->get();
+                $rules = Rule::where('id_penyakit', $penyakit_id)->first();
                 $counter = 0;
-                foreach ($rules_for_penyakit as $rule) {
-                    $gejala_list_for_rule = explode(',', $rule->daftar_gejala);
+                $gejala_list_for_rule = explode(',', $rules->daftar_gejala);
             
-                    foreach ($gejala_list_for_rule as $gejala_id) {
-                        foreach ($id_gejala_all as $applied_gejala) {
-                            if ($gejala_id == $applied_gejala) {
-                                $counter++;
-                            }
+                foreach ($gejala_list_for_rule as $gejala_id) {
+                    foreach ($id_gejala_all as $applied_gejala) {
+                        if ($gejala_id == $applied_gejala) {
+                            $counter++;
                         }
                     }
-            
-                    $score = $counter / count($gejala_list_for_rule) * 100;
-                    $score_results[] = $score;
                 }
+        
+                $score = $counter / count($gejala_list_for_rule) * 100;
+                $score_results[] = $score;
             }
-            
+
             Session::put('score', $score_results);
             
-            // dd($id_gejala_all,$id_penyakit_possible, Session::get('score'));
-
             // kemungkianan dan score ada diarrray berbeda dengan urutan sama
             // ambil index untuk kemungkinan tertinggi
             $score_all = Session::get('score');
             $max_score = max($score_all);
             $maxIndex = array_search($max_score, $score_all); 
-            $max_possible_penyakit = $id_penyakit_possible[$maxIndex];
-            
+            $max_possible_penyakit = $id_penyakit_possible[$maxIndex]; 
+
             // $countArray = array_count_values($penyakit);
             // $arrayLength = count($penyakit);
             // arsort($countArray);
